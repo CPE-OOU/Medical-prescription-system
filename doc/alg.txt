@@ -1,0 +1,62 @@
+Based on the search results, there are several machine learning algorithms that can be used to classify drugs based on a given dataset. Here are some examples:
+
+1. Decision Tree Algorithm: This algorithm can be used to classify drugs based on their molecular properties and characteristics[7]. The dataset is pre-processed to handle missing values, normalize features, and reduce dimensionality using appropriate techniques. The algorithm is implemented and evaluated using Python's extensive libraries such as scikit-learn.
+
+2. Random Forest Algorithm: This algorithm is an ensemble learning method that combines multiple decision trees to improve the accuracy of the classification[1]. It can be used to classify drugs based on patient general information and diagnosis.
+
+3. Support Vector Machine (SVM) Algorithm: This algorithm can be used to classify drugs based on their mechanism of action[4]. It is a popular machine learning algorithm in all aspects of data science and is routinely used in bioactivity and property predictions of drug-related compounds.
+
+4. Multi-Layer Perceptron (MLP) Algorithm: This algorithm is a type of neural network that can be used to classify drugs based on their sensitivity or resistance to certain cell lines[5]. It applies a manifold learning method on the discretized sensitive/resistant labels and can efficiently predict the sensitive or resistant cell line-drug pairs.
+
+5. K-Nearest Neighbor (KNN) Algorithm: This algorithm can be used to classify drugs based on their mechanism of action[4]. It is based on the well-known k-Nearest Neighbor (kNN) algorithm and can predict the mechanism of action of a drug based on the k nearest neighbors in the training set.
+
+To implement these algorithms, you can refer to the code examples and tutorials provided in the search results[1][2][3][5][7][8]. You can also use Python's extensive libraries such as scikit-learn and TensorFlow to implement these algorithms. It is important to preprocess the dataset and handle missing values, normalize features, and reduce dimensionality using appropriate techniques to improve the accuracy of the classification.
+
+I'm sorry, but the search results did not provide any specific code examples for drug classification using machine learning algorithms. However, I can provide you with a general outline of the steps involved in implementing a machine learning algorithm for drug classification:
+Preprocess the dataset: This involves handling missing values, normalizing features, and reducing dimensionality using appropriate techniques.
+Split the dataset into training and testing sets: This involves randomly dividing the dataset into two sets: a training set and a testing set. The training set is used to train the machine learning algorithm, while the testing set is used to evaluate its performance.
+Choose a machine learning algorithm: There are several machine learning algorithms that can be used for drug classification, such as decision trees, random forests, support vector machines, and neural networks. Choose an algorithm that is appropriate for your dataset and problem.
+Train the machine learning algorithm: This involves fitting the algorithm to the training set and adjusting its parameters to optimize its performance.
+Evaluate the performance of the machine learning algorithm: This involves using the testing set to evaluate the accuracy, precision, recall, and F1 score of the algorithm.
+Use the machine learning algorithm to classify new drugs: Once the algorithm has been trained and evaluated, it can be used to classify new drugs based on their features and characteristics.
+To implement these steps, you can use Python's extensive libraries such as scikit-learn and TensorFlow. You can also refer to the code examples and tutorials provided in the search results to learn how to implement specific machine learning algorithms for drug classification.
+
+Citations:
+[1] https://www.kaggle.com/code/caesarmario/drug-classification-w-various-ml-models
+[2] https://www.kaggle.com/code/themlphdstudent/drug-classification-using-state-of-the-art-ml-algo
+[3] https://youtube.com/watch?v=1sDjf6b0LwM
+[4] https://link.springer.com/article/10.1007/s44163-021-00012-2
+[5] https://github.com/fahmadimoughari/CDSML
+[6] https://link.springer.com/article/10.1007/s11030-021-10239-x
+[7] https://journal.ittelkom-pwt.ac.id/index.php/dinda/article/view/1203
+[8] https://www.ijraset.com/research-paper/drug-classification-using-machine-learning
+
+
+
+//clasiifcation code
+https://www.kaggle.com/code/themlphdstudent/drug-classification-using-state-of-the-art-ml-algo
+https://www.kaggle.com/code/caesarmario/drug-classification-w-various-ml-models
+https://www.kaggle.com/code/dylanduario/drugs-classification-using-knn
+https://www.kaggle.com/code/joaoassalim/drug-classification-100-model
+https://www.kaggle.com/code/gulnihall/drug-classification-many-models-votingc
+
+https://www.kaggle.com/code/enochboateng/making-drug-prediction-for-patients
+https://www.kaggle.com/code/dhineshx1/drug-classification-using-decision-tree
+https://www.kaggle.com/code/mustaphap/mastering-multiclass-classification-drug-dataset
+https://www.kaggle.com/code/thjamali/drug-classification-using-knn-algorithm
+https://www.kaggle.com/code/nasimmahmud/drug-classification-multiclass-multilabel
+https://www.kaggle.com/code/khalidmostafa/drug-classification-visualization-prediction-98 {best}
+
+https://www.kaggle.com/code/kirtanmatalia26/drug-prediction-using-xgboost
+https://www.kaggle.com/code/julianacorts/drug-classif-ml-decision-tree-and-random-forest {best}
+https://www.kaggle.com/code/olegimegi/predicting-medication {best}
+https://www.kaggle.com/code/serxio/drug-classify-using-tree-knn-svm-and-stacking {best}
+
+https://www.kaggle.com/datasets/thedevastator/drug-performance-evaluation/data {best}
+https://www.kaggle.com/code/tulamm/predictive-modeling-on-drugs {best -> one 1}
+https://www.kaggle.com/code/sridharstreaks/medicine-recomendation-and-eda {best -> two}
+https://www.kaggle.com/code/erfanabbasi/drug-performance-evaluation
+https://www.kaggle.com/code/yassireelhani/drugs-eda
+
+
+//https://www.kaggle.com/code/tanulsingh077/deep-learning-for-nlp-zero-to-transformers-bert

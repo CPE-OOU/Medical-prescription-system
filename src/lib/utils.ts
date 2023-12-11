@@ -6,12 +6,30 @@ import { fileURLToPath } from 'url';
 import { getInvalidQueryParamsResponse } from './response';
 import { ZodError } from 'zod';
 import { addMinutes } from 'date-fns';
-import { SQL, sql, InferSelectModel, getTableColumns } from 'drizzle-orm';
+import {
+  Column,
+  DrizzleTypeError,
+  Equal,
+  GetColumnData,
+  SQL,
+  Table,
+  sql,
+} from 'drizzle-orm';
 import { SelectedFields } from 'drizzle-orm/pg-core';
 import { AuthToken } from '@/db/tables/auth-tokens';
 import { classifyErrorType } from './validator';
-import { users } from '@/db/schema';
 
+export const createSlug = (value: string) => {
+  return value.toLowerCase().split(/\s+/).join('-');
+};
+
+export const getImageSlug = (name: string) =>
+  name
+    .toUpperCase()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map(([firstChar]) => firstChar)
+    .join('');
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -86,6 +104,33 @@ export function routeIsActive({
   );
 }
 
+export type SelectResultField<
+  T,
+  TDeep extends boolean = true
+> = T extends DrizzleTypeError<any>
+  ? T
+  : T extends Table
+  ? Equal<TDeep, true> extends true
+    ? SelectResultField<T['_']['columns'], false>
+    : never
+  : T extends Column<any>
+  ? GetColumnData<T>
+  : T extends SQL | SQL.Aliased
+  ? T['_']['type']
+  : T extends Record<string, any>
+  ? SelectResultFields<T, true>
+  : never;
+
+export type SelectResultFields<
+  TSelectedFields,
+  TDeep extends boolean = true
+> = {
+  [Key in keyof TSelectedFields & string]: SelectResultField<
+    TSelectedFields[Key],
+    TDeep
+  >;
+} & {};
+
 export function jsonAggBuildObject<T extends SelectedFields>(shape: T) {
   const chunks: SQL[] = [];
 
@@ -97,7 +142,28 @@ export function jsonAggBuildObject<T extends SelectedFields>(shape: T) {
     chunks.push(sql`${value}`);
   });
 
-  return sql`coalesce(json_agg(distinct jsonb_build_object(${sql.join(
-    chunks
-  )})), '[]')`;
+  return sql<Array<SelectResultFields<T>>>`coalesce(
+      json_agg(
+        distinct jsonb_build_object(${sql.join(chunks)})
+        ),'[]'::json)`;
+}
+
+export function jsonBuildObject<T extends SelectedFields>(shape: T) {
+  const chunks: SQL[] = [];
+
+  Object.entries(shape).forEach(([key, value]) => {
+    if (chunks.length > 0) {
+      chunks.push(sql.raw(`,`));
+    }
+    chunks.push(sql.raw(`'${key}',`));
+    chunks.push(sql`${value}`);
+  });
+
+  return sql<SelectResultFields<T>>`json_build_object(${sql.join(chunks)})`;
+}
+
+export function getUrlQuery<Query extends Record<string, unknown>>(
+  url: string
+) {
+  return Object.fromEntries(new URL(url).searchParams) as Query;
 }

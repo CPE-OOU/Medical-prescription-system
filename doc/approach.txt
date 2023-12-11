@@ -1,0 +1,29 @@
+Here are some of the valuable vectors that you can compute from the dataset you have provided:
+
+One-hot encoding of the drug name: This will create a unique vector for each drug name in your dataset. This vector can be used to identify similar drugs and to group drugs into categories.
+Word embedding of the review: This will create a vector that represents the meaning of the review. This vector can be used to understand the patient's experience with the medication and to identify the factors that contribute to a positive or negative experience.
+Similarity between the condition and the drug name: This vector can be used to identify drugs that are commonly used to treat the patient's condition.
+Rating over time: This vector can be used to track how the patient's rating of the medication changes over time. This information can be used to identify medications that are effective over the long term.
+Patient demographics: This vector can be used to identify groups of patients who are more likely to benefit from certain medications.
+You can also combine these vectors to create even more informative vectors. For example, you could create a vector that represents the similarity between the patient's review and the reviews of other patients who have taken the same medication. This vector could be used to identify patients who are likely to have a similar experience with the medication.
+
+Once you have computed these vectors, you can use them to train a machine learning algorithm to predict the most effective medication for each patient. You can also use these vectors to develop other features, such as a recommendation system that suggests similar drugs to patients who are looking for a new medication.
+https://www.kaggle.com/code/pavansanagapati/knowledge-graph-nlp-tutorial-bert-spacy-nltk
+https://www.kaggle.com/code/emdemor/drug-prediction-acc-99-cv-score-98-2
+https://www.kaggle.com/code/amritpal333/predict-drug-addiction-automl-begineer/input
+decision tree classifier and random forest 
+https://www.kaggle.com/code/hajarikishan/drug-classification-using-random-forest-classifier
+https://www.kaggle.com/code/eward96/drug-classification-100-accuracy
+https://www.kaggle.com/code/chocozzz/recommendation-medicines-by-using-a-review
+https://www.kaggle.com/code/shubhamgadekar/complete-drug-review-analytics
+https://www.kaggle.com/code/shubhamgadekar/complete-drug-review-analytics/notebook
+https://www.kaggle.com/code/avatust/predicting-drug-ratings
+https://www.kaggle.com/code/shiffy46/drug-reviews
+https://www.kaggle.com/code/janmejaybhoi/sentiment-analysis-drug-review-transfer-learning/notebook
+https://www.kaggle.com/code/ashirwadsangwan/drugs-review-sentiment-analysis
+
+
+//
+
+https://www.kaggle.com/datasets/rohanharode07/webmd-drug-reviews-dataset/data
+https://www.kaggle.com/code/chocozzz/recommendation-medicines-by-using-a-review

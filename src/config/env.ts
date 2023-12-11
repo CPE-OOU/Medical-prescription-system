@@ -9,6 +9,9 @@ const EnvDefinedSchema = object({
   NEXT_SUPABASE_URL: string().url(),
   NEXT_SUPABASE_ANON: string(),
   NEXT_SUPABASE_SECRET_KEY: string(),
+  NEXTAUTH_SECRET: string(),
+  GOOGLE_CLIENT_ID: string(),
+  GOOGLE_CLIENT_SECRET: string(),
 });
 
 const parsedEnv = EnvDefinedSchema.parse(process.env);

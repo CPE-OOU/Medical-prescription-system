@@ -1,0 +1,1 @@
+ALTER TABLE "drugs" ALTER COLUMN "effective" SET DATA TYPE numeric(4);

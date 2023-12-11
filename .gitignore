@@ -41,3 +41,5 @@ next-env.d.ts
 #ignore migration files
 ./src/**/migrations/
 
+src/ml/
+src/**/*.csv

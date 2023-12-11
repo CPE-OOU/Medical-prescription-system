@@ -6,10 +6,6 @@ import { User } from '@/db/schema';
 import { AuthToken, authAction, authTokens } from '@/db/tables/auth-tokens';
 import { db } from '@/db/init';
 
-function wrapValue(value: any) {
-  return { value };
-}
-
 export async function generateOTP<const T>(
   type: (typeof authAction.enumValues)[number],
   userId: User['id'],

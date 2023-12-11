@@ -1,1 +1,28 @@
 https://github.com/search?q=medical%20prescription&type=repositories
+https://open.fda.gov/apis/drug/event/download/ {dataset}
+https://open.fda.gov/apis/drug/label/download/ {dataset}
+https://open.fda.gov/apis/drug/drugsfda/download/ {dataset}
+//drug prescription code with data set
+https://www.kaggle.com/code/fabricelaura/projet-ia/input?select=roam_prescription_based_prediction.jsonl
+https://www.kaggle.com/code/brianokechukwu/drug-prescription/output
+https://www.kaggle.com/datasets/manncodes/drug-prescription-to-disease-dataset/data
+https://www.kaggle.com/code/fabricelaura/projet-ia/input?select=roam_prescription_based_prediction.jsonl
+https://www.kaggle.com/code/tajuddinkh/drugs-prediction-data-preprocessing-json-to-csv
+https://www.kaggle.com/code/dharshanadhanendran/drugs-prediction-dataset
+https://www.kaggle.com/code/parthchittawar/prescription-drug-type/notebook
+https://www.kaggle.com/code/dharshanadhanendran/drugs-prediction-dataset/notebook
+https://www.kaggle.com/code/shardulpingale/medicine-prescription-using-ml
+https://www.kaggle.com/code/shubhamwani22/drugs-prescription/input {important 1}
+https://www.kaggle.com/code/abdelrhmanragab/prescription-drugs-using-consumer-reviews {important 2}
+
+//drugs review data set
+https://www.kaggle.com/datasets/rohanharode07/webmd-drug-reviews-dataset
+https://www.kaggle.com/datasets/mohamedabdelwahabali/drugreview
+https://www.kaggle.com/code/janmejaybhoi/sentiment-analysis-drug-review-transfer-learning/input
+https://archive.ics.uci.edu/dataset/461/drug+review+dataset+druglib+com
+
+
+//hooks
+https://webhook.site/#!/2ed54434-353a-43c5-a60a-80dc1e64cd19
+https://docs.webhookthing.com/#authentication-headers
+https://hookdeck.com/

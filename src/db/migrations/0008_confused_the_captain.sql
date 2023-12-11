@@ -1,0 +1,1 @@
+ALTER TABLE "drugs" RENAME COLUMN "therapic_class" TO "therapeutic_class";

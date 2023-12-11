@@ -2,10 +2,188 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-Thin.woff2') format(woff2);
+    font-weight: 100;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-ExtraLight.woff2') format(woff2);
+    font-weight: 200;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-Light.woff2') format(woff2);
+    font-weight: 300;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-Regular.woff2') format(woff2);
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-Medium.woff2') format(woff2);
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-DemiBold.woff2') format(woff2);
+    font-weight: 600;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-Bold.woff2') format(woff2);
+    font-weight: 700;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-ExtraBold.woff2') format(woff2);
+    font-weight: 800;
+  }
+
+  @font-face {
+    font-family: 'TTCommons';
+    src: url('/fonts/TTCommons-Black.woff2') format(woff2);
+    font-weight: 900;
+  }
+
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+
+  h1 {
+    @apply font-tt-commons  font-bold text-[32px] leading-[38px];
+  }
+  h2 {
+    @apply font-tt-commons font-bold text-[28px] leading-[34px];
+  }
+  h3 {
+    @apply font-tt-commons font-bold text-[26px]  leading-[34px];
+  }
+  h4 {
+    @apply font-tt-commons font-bold text-[20px]  leading-[26px];
+  }
+  h5 {
+    @apply font-tt-commons font-bold text-[18px]  leading-[24px];
+  }
+}
+.body-1 {
+  @apply font-tt-commons font-bold text-base leading-[24px];
+}
+.body-2 {
+  @apply font-tt-commons font-semibold text-base leading-[24px];
+}
+.body-3 {
+  @apply font-tt-commons font-medium text-base leading-[24px];
+}
+.body-4 {
+  @apply font-tt-commons font-normal text-base leading-[24px];
+}
+.body-5 {
+  @apply font-tt-commons font-bold text-sm leading-[20px];
+}
+.body-6 {
+  @apply font-tt-commons font-semibold text-sm leading-[20px];
+}
+.body-7 {
+  @apply font-tt-commons font-medium text-sm leading-[20px];
+}
+.body-8 {
+  @apply font-tt-commons font-normal text-base leading-[24px];
+}
+.body-9 {
+  @apply font-tt-commons font-bold text-[13px] leading-[16px];
+}
+.body-10 {
+  @apply font-tt-commons font-semibold text-[13px] leading-[16px];
+}
+
+.body-11 {
+  @apply font-tt-commons font-medium text-[13px] leading-[16px];
+}
+.body-12 {
+  @apply font-tt-commons font-normal text-[13px] leading-[16px];
+}
+.body-13 {
+  @apply font-tt-commons font-bold text-[12px] leading-[16px];
+}
+.body-14 {
+  @apply font-tt-commons font-semibold text-[12px] leading-[16px];
+}
+.body-15 {
+  @apply font-tt-commons font-normal text-[12px] leading-[16px];
+}
+
+.btn-1 {
+  @apply font-tt-commons font-bold text-base leading-[24px];
+}
+
+.btn-2 {
+  @apply font-tt-commons font-bold text-sm leading-[20px];
+}
+
+.link {
+  @apply font-tt-commons font-bold text-sm leading-[16px];
+}
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-blue: #5065f6;
+  --primary-green: #28b95e;
+  --secondary-yellow: #ffdb45;
+  --secondary-pink: #f04b69;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,13 +193,9 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
+:root,
+html,
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  height: 100%;
+  font-family: 'TTCommons', Arial, Helvetica, sans-serif;
 }

@@ -35,7 +35,7 @@ export const nextAuthOptions: NextAuthOptions = {
           .from(users)
           .where(eq(users.email, credentials!.email));
 
-        if (!(await verifyPassword(user, credentials.password))) {
+        if (!(user && (await verifyPassword(user, credentials.password)))) {
           throw Error('User credential not a match. Check email or password');
         }
 

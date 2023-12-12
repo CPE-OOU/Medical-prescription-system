@@ -1,7 +1,7 @@
 import { getCurrentUser } from '@/lib/auth';
-import { LayoutSideBar } from './__components/sidebar';
+import { LayoutSideBar } from '../../__components/sidebar';
 import { redirect } from 'next/navigation';
-import { NavHeader } from './__components/header';
+import { NavHeader } from '../../__components/header';
 
 export default async function MainLayoutPage({
   children,

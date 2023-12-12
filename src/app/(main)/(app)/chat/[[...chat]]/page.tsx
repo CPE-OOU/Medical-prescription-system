@@ -1,4 +1,4 @@
-import { SearchCard } from './__components/search';
+import { SearchCard } from '../../__components/search';
 
 export const dynamic = 'force-dynamic';
 export default function MainPage() {

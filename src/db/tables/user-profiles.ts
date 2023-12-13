@@ -10,6 +10,7 @@ export const userProfiles = pgTable('user_profiles', {
     .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   fullName: varchar('full_name', { length: 256 }),
+  profileImgUrl: varchar('profile_img_url', { length: 256 }),
   gender: userGender('gender'),
   dateOfBirth: date('date_of_birth'),
 });

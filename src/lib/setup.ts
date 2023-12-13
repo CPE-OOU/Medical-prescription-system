@@ -5,7 +5,7 @@ import { drugs } from '@/db/schema';
 import convertCsv from 'csvtojson/v2';
 import path from 'path';
 dotenv.config({
-  path: path.resolve(__dirname, '../../', '.env'),
+  path: path.resolve(import.meta.dir, '../../', '.env'),
 });
 
 function readCsvFile(filePath: string) {
@@ -62,7 +62,9 @@ loadDataToDb({
     };
   },
   injectData: async (data) => {
-    await db.insert(drugs).values(data);
+    console.log(data.slice(0, 1));
+    await db.insert(drugs).values(data.slice(0, 1));
+    throw 0;
   },
   batchSize: 1000,
 })

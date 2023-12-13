@@ -50,11 +50,13 @@ export const getCurrentUser = async () => {
   }
 
   const { email, emailVerified, id } = getTableColumns(users);
-  const { fullName, dateOfBirth, gender } = getTableColumns(userProfiles);
+  const { fullName, profileImgUrl, dateOfBirth, gender } =
+    getTableColumns(userProfiles);
 
   const userProfileSelect = jsonBuildObject({
     fullName,
     dateOfBirth,
+    profileImgUrl,
     gender,
   });
 

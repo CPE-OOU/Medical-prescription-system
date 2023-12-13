@@ -71,6 +71,20 @@
       "when": 1702149619227,
       "tag": "0009_rapid_silhouette",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1702414703477,
+      "tag": "0010_uneven_the_leader",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1702443855207,
+      "tag": "0011_striped_giant_man",
+      "breakpoints": true
     }
   ]
 }

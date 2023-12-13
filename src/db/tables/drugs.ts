@@ -19,12 +19,11 @@ export const drugs = pgTable('drugs', {
     length: 256,
   }),
   decription: text('description'),
-  effective: decimal('effective', { precision: 4 }),
+  effective: decimal('effective', { precision: 3 }),
   sideEffect: text('side_effect'),
   drugUrl: varchar('drug_url', { length: 256 }),
   relatedDrugs:
     json('related_drugs').$type<Array<{ drugName: string; link: string }>>(),
   therapeuticClass: varchar('therapeutic_class', { length: 256 }),
 });
-
 export type Drug = typeof drugs.$inferSelect;

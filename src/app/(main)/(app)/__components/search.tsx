@@ -12,20 +12,23 @@ import { TypeOf, object, string } from 'zod';
 const formSchema = object({ search: string().min(1) });
 
 type SearchFormData = TypeOf<typeof formSchema>;
-export const SearchCard = () => {
+export const SearchCard = ({ hideCover }: { hideCover?: boolean }) => {
   const form = useForm<SearchFormData>({ resolver: zodResolver(formSchema) });
   return (
-    <div>
+    <div className="w-full">
       <div className="flex items-center gap-x-1 mb-10">
-        <div className="relative w-14 h-14">
-          <Image src="/icons/logo.svg" fill alt="logo" />
-        </div>
-        <p className="font-semibold text-6xl text-[#323343]">Pharma</p>
+        {!hideCover && (
+          <div className="relative w-[60px] h-[60px]">
+            <Image src="/icons/logo.svg" fill alt="logo" />
+          </div>
+        )}
+
+   
       </div>
       <h1 className="text-[#323343]">Hello, How can we help you?</h1>
       <div className="mt-8">
         <Form {...form}>
-          <form className="w-[520px] flex items-center gap-x-5">
+          <form className="w-full flex items-center gap-x-5">
             <FormField
               name="search"
               control={form.control}

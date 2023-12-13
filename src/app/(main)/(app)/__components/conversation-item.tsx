@@ -13,11 +13,11 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
-interface ChatItemProps {
+interface ConversationItem {
   conversation?: Conversation;
 }
 
-export const ChatItem = ({ conversation }: ChatItemProps) => {
+export const ConversationItme = ({ conversation }: ConversationItem) => {
   const [hovered, setHovered] = useState(false);
   const [optionOpened, setOptionOpened] = useState(false);
   return (

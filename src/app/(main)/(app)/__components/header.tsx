@@ -16,15 +16,24 @@ import { ClientUser } from '@/lib/auth';
 import { createSlug, getImageSlug } from '@/lib/utils';
 import { Bell } from 'lucide-react';
 import { signOut } from 'next-auth/react';
+import { useLayoutStore } from '../__state/layout';
 
 interface NavHeaderProps {
   user: ClientUser;
 }
 
 export const NavHeader = ({ user }: NavHeaderProps) => {
+  const { setSidebarCollapse, sidebarCollapse } = useLayoutStore(
+    ({ setSidebarCollapse, sidebarCollapse }) => ({
+      setSidebarCollapse,
+      sidebarCollapse,
+    })
+  );
   return (
     <div className="flex items-center justify-between px-5 py-2 h-full">
-      <Icon src="/icons/menu.svg" className="w-6 h-6" />
+      <span onClick={() => setSidebarCollapse(!sidebarCollapse)}>
+        <Icon src="/icons/menu.svg" className="w-6 h-6" />
+      </span>
 
       <div className="inline-flex items-center gap-x-[52px]">
         <span className="relative">
@@ -41,12 +50,16 @@ export const NavHeader = ({ user }: NavHeaderProps) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar className="h-8 w-8">
+              <Avatar className="h-8 w-8 bg-white">
                 <AvatarImage
                   src="/avatars/01.png"
+                  style={{ background: 'white' }}
                   alt={user.profile.fullName!}
                 />
-                <AvatarFallback>
+                <AvatarFallback
+                  style={{ background: 'white' }}
+                  className="!bg-white"
+                >
                   {getImageSlug(user.profile.fullName!)}
                 </AvatarFallback>
               </Avatar>

@@ -1,31 +1,19 @@
 'use client';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import {
-  MoreVertical,
-  Pencil,
-  Pill,
-  Pin,
-  Plus,
-  Settings,
-  Trash,
-} from 'lucide-react';
+import { Plus, Settings } from 'lucide-react';
 import Image from 'next/image';
 import { useLayoutStore } from '../__state/layout';
-import { ChatItem } from './chat-item';
+import { ConversationItme } from './conversation-item';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export const LayoutSideBar = () => {
   const sidebarCollapse = useLayoutStore(
     ({ sidebarCollapse }) => sidebarCollapse
   );
+
+  const router = useRouter();
 
   if (sidebarCollapse) {
     return (
@@ -35,6 +23,7 @@ export const LayoutSideBar = () => {
         </div>
         <Button
           className="white bg-primary px-3 py-2 w-full items-center text-white btn-1"
+          onClick={() => router.push('/chat')}
           size="icon"
         >
           <Plus className="w-6 h-6 mr-[10px]" />
@@ -49,7 +38,10 @@ export const LayoutSideBar = () => {
         <div className="relative w-9 h-9 ml-[6px] ">
           <Image src="/icons/logo.svg" fill alt="logo" />
         </div>
-        <Button className="white bg-primary px-3 py-2 w-full items-center text-white btn-1">
+        <Button
+          className="white bg-primary px-3 py-2 w-full items-center text-white btn-1"
+          onClick={() => router.push('/chat')}
+        >
           <Plus className="w-6 h-6 mr-[10px]" />
           New Chat
         </Button>
@@ -57,15 +49,18 @@ export const LayoutSideBar = () => {
         <div>
           <p className="body-7 mb-3">Recents</p>
           <div className="space-y-3">
-            <ChatItem />
+            <ConversationItme />
           </div>
         </div>
       </div>
       <div>
-        <h5 className="text-[#757B82] flex items-center gap-x-[10px] font-normal">
+        <Link
+          href="/settings"
+          className="text-[#757B82] flex items-center gap-x-[10px] font-normal"
+        >
           <Settings className="w-[18px] h-[18px] " />
           Settings
-        </h5>
+        </Link>
       </div>
     </div>
   );

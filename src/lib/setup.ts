@@ -4,6 +4,8 @@ import * as dotenv from 'dotenv';
 import { drugs } from '@/db/schema';
 import convertCsv from 'csvtojson/v2';
 import path from 'path';
+import { parsedEnv } from '@/config/env';
+import { drug2Conditions } from '@/db/tables/drug-to-condition';
 dotenv.config({
   path: path.resolve(import.meta.dir, '../../', '.env'),
 });
@@ -36,45 +38,43 @@ async function loadDataToDb<T extends Record<string, unknown>>(option: {
   process.exit(0);
 }
 
-loadDataToDb({
-  filePath: path.join(
-    process.cwd(),
-    '../ml/new/',
-    './drugs_side_effects_drugs_com.csv'
-  ),
-  mapFn(data) {
-    return {
-      name: data['drug_name'] as string,
-      condition: data['medical_condition'] as string,
-      sideEffect: data['side_effects'] as string,
-      drugUrl: data['drug_link'] as string,
-      medicalConditionUrl: data['medical_condition_url'] as string | undefined,
-      effective: (+(data['rating'] as string | number)).toPrecision(3) || null,
-      decription: data['medical_condition_description'] as string | undefined,
-      relatedDrugs: (data['related_drugs'] as string | undefined)
-        ?.split('|')
-        .map((item) => {
-          const [drugName, link] = item
-            .split(/(?<!https?):/, 2)
-            .map((value) => value.trim());
-          return { drugName, link };
-        }),
-    };
-  },
-  injectData: async (data) => {
-    console.log(data.slice(0, 1));
-    await db.insert(drugs).values(data.slice(0, 1));
-    throw 0;
-  },
-  batchSize: 1000,
-})
-  .then(() => {
-    console.log('completed');
-  })
-  .catch((e) => {
-    console.log('An error occurs');
-    console.log(e);
-  });
+// loadDataToDb({
+//   filePath: path.join(
+//     process.cwd(),
+//     '../ml/new/',
+//     './drugs_side_effects_drugs_com.csv'
+//   ),
+//   mapFn(data) {
+//     return {
+//       name: data['drug_name'] as string,
+//       condition: data['medical_condition'] as string,
+//       sideEffect: data['side_effects'] as string,
+//       drugUrl: data['drug_link'] as string,
+//       medicalConditionUrl: data['medical_condition_url'] as string | undefined,
+//       effective: (+(data['rating'] as string | number)).toPrecision(3) || null,
+//       decription: data['medical_condition_description'] as string | undefined,
+//       relatedDrugs: (data['related_drugs'] as string | undefined)
+//         ?.split('|')
+//         .map((item) => {
+//           const [drugName, link] = item
+//             .split(/(?<!https?):/, 2)
+//             .map((value) => value.trim());
+//           return { drugName, link };
+//         }),
+//     };
+//   },
+//   injectData: async (data) => {
+//     await db.insert(drugs).values(data);
+//   },
+//   batchSize: 2000,
+// })
+//   .then(() => {
+//     console.log('completed');
+//   })
+//   .catch((e) => {
+//     console.log('An error occurs');
+//     console.log(e);
+//   });
 
 // loadDataToDb({
 //   filePath: path.join(process.cwd(), '../ml/new/', './medicine_dataset.csv'),
@@ -102,7 +102,7 @@ loadDataToDb({
 //   injectData: async (data) => {
 //     await db.insert(drugs).values(data);
 //   },
-//   batchSize: 1000,
+//   batchSize: 3000,
 // })
 //   .then(() => {
 //     console.log('completed');
@@ -111,3 +111,31 @@ loadDataToDb({
 //     console.log('An error occurs');
 //     console.log(e);
 //   });
+// /home/buildthings/Desktop/medical-prescription-system/src/ml/data/csv/drug_review_validation.csv
+loadDataToDb({
+  filePath: path.join(
+    process.cwd(),
+    '../ml/data/csv/',
+    './drug_review_validation.csv'
+  ),
+  mapFn(data) {
+    return {
+      drugName: data['drugName'] as string,
+      condition: data['condition'] as string,
+      reviews: data['review'] as string,
+      effective: data['rating'] as string,
+      reviewsLength: data['review_length'] as string,
+    };
+  },
+  injectData: async (data) => {
+    await db.insert(drug2Conditions).values(data);
+  },
+  batchSize: 3000,
+})
+  .then(() => {
+    console.log('completed');
+  })
+  .catch((e) => {
+    console.log('An error occurs');
+    console.log(e);
+  });

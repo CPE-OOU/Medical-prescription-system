@@ -1,17 +1,18 @@
 'use server';
 
 import { db } from '@/db/init';
-import { conversations } from '@/db/tables/conversations';
+import { conversations, drugs, messages } from '@/db/schema';
 import { action } from '@/lib/safe-action';
-import { eq } from 'drizzle-orm';
-import { createInsertSchema } from 'drizzle-zod';
+import { eq, ilike } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { object, string } from 'zod';
 
 export const updateConversationTitle = action(
-  createInsertSchema(conversations, {
-    id: (schema) => schema.id.uuid(),
-    title: (schema) => schema.title.min(1).max(256),
-  }).pick({ id: true, title: true }),
+  object({
+    id: string().uuid(),
+    title: string().min(1).max(256),
+  }),
   async ({ id, title }) => {
     await db
       .update(conversations)
@@ -23,9 +24,9 @@ export const updateConversationTitle = action(
 );
 
 export const pinConservation = action(
-  createInsertSchema(conversations, {
-    id: (schema) => schema.id.uuid(),
-  }).pick({ id: true }),
+  object({
+    id: string().uuid(),
+  }),
   async ({ id }) => {
     await db
       .update(conversations)
@@ -37,12 +38,80 @@ export const pinConservation = action(
 );
 
 export const removeConversation = action(
-  createInsertSchema(conversations, {
-    id: (schema) => schema.id.uuid(),
-  }).pick({ id: true }),
+  object({
+    id: string().uuid(),
+  }),
   async ({ id }) => {
     await db.delete(conversations).where(eq(conversations.id, id!));
 
     revalidatePath('/');
+  }
+);
+
+export const createMessage = action(
+  object({
+    conversationId: string().uuid().optional(),
+    message: string().max(256),
+    userId: string().uuid(),
+  }),
+  async ({ conversationId, userId, message: data }) => {
+    if (conversationId) {
+      const drugsToCondition = await db
+        .select()
+        .from(drugs)
+        .where(ilike(drugs.condition, data));
+
+      Promise.allSettled(
+        drugsToCondition.map((drug) =>
+          db.insert(messages).values({
+            sentTime: new Date(),
+            conversationId,
+            serverContent: drug,
+            userId,
+            title: drug.name,
+          })
+        )
+      );
+
+      await db.insert(messages).values({
+        userContent: data,
+        conversationId,
+        userId,
+        sentTime: new Date(),
+      });
+
+      revalidatePath(`/chat/${conversationId}`);
+    } else {
+      const [conversation] = await db
+        .insert(conversations)
+        .values({ title: data, userId })
+        .returning();
+      const drugsToCondition = await db
+        .select()
+        .from(drugs)
+        .where(ilike(drugs.condition, data));
+
+      Promise.allSettled(
+        drugsToCondition.map((drug) =>
+          db.insert(messages).values({
+            sentTime: new Date(),
+            conversationId: conversation.id,
+            serverContent: drug,
+            userId,
+            title: drug.name,
+          })
+        )
+      );
+
+      await db.insert(messages).values({
+        userContent: data,
+        title: data,
+        userId,
+        conversationId: conversation.id,
+        sentTime: new Date(),
+      });
+
+      redirect(`/chat/${conversation.id}`);
+    }
   }
 );

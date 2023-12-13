@@ -9,7 +9,9 @@ export async function webScrapeDrugContent(
   if (loadFromFile) {
     html = fs.readFileSync(drugOrFilePath, 'utf-8');
   } else {
-    const response = await fetch(`www.drugs.com/${drugOrFilePath}.html`);
+    const response = await fetch(
+      `https://www.drugs.com/${drugOrFilePath.toLowerCase()}.html`
+    );
     if (!response.ok) return null;
     html = await response.text();
   }

@@ -19,7 +19,7 @@ export const drugs = pgTable('drugs', {
     length: 256,
   }),
   decription: text('description'),
-  effective: decimal('effective', { precision: 3 }),
+  effective: text('effective'),
   sideEffect: text('side_effect'),
   drugUrl: varchar('drug_url', { length: 256 }),
   relatedDrugs:

@@ -1,1 +1,0 @@
-ALTER TABLE "drugs" DROP CONSTRAINT "drugs_name_unique";

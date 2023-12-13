@@ -1,19 +1,39 @@
 'use client';
 
+import { createMessage } from '@/actions/conversations';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { ClientUser } from '@/lib/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Search } from 'lucide-react';
+import { Loader2, Search } from 'lucide-react';
+import { useAction } from 'next-safe-action/hook';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { TypeOf, object, string } from 'zod';
 
 const formSchema = object({ search: string().min(1) });
 
 type SearchFormData = TypeOf<typeof formSchema>;
-export const SearchCard = ({ hideCover }: { hideCover?: boolean }) => {
+export const SearchCard = ({
+  hideCover,
+  user,
+  conversationId,
+}: {
+  hideCover?: boolean;
+  user: ClientUser;
+  conversationId?: string;
+}) => {
   const form = useForm<SearchFormData>({ resolver: zodResolver(formSchema) });
+  const { execute, status } = useAction(createMessage, {
+    onError: () => {
+      toast.error('Message', { description: 'Message failed to send' });
+    },
+    onSuccess: () => {
+      form.reset();
+    },
+  });
   return (
     <div className="w-full">
       <div className="flex items-center gap-x-1 mb-10">
@@ -22,13 +42,18 @@ export const SearchCard = ({ hideCover }: { hideCover?: boolean }) => {
             <Image src="/icons/logo.svg" fill alt="logo" />
           </div>
         )}
-
-   
       </div>
-      <h1 className="text-[#323343]">Hello, How can we help you?</h1>
+      {!hideCover && (
+        <h1 className="text-[#323343]">Hello, How can we help you?</h1>
+      )}
       <div className="mt-8">
         <Form {...form}>
-          <form className="w-full flex items-center gap-x-5">
+          <form
+            className="w-full flex items-center gap-x-5"
+            onSubmit={form.handleSubmit(({ search }) => {
+              execute({ message: search, userId: user.id, conversationId });
+            })}
+          >
             <FormField
               name="search"
               control={form.control}
@@ -46,7 +71,11 @@ export const SearchCard = ({ hideCover }: { hideCover?: boolean }) => {
             />
 
             <Button className="bg-primary-brand text-white">
-              <Search className="w-[30px] h-[30px] " />
+              {status === 'executing' ? (
+                <Loader2 className="w-[30px] h-[30px] animate-spin" />
+              ) : (
+                <Search className="w-[30px] h-[30px] " />
+              )}
             </Button>
           </form>
         </Form>

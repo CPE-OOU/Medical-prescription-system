@@ -1,11 +1,17 @@
 DO $$ BEGIN
- CREATE TYPE "auth_action" AS ENUM('change-email');
+ CREATE TYPE "auth_action" AS ENUM('account-verify', 'reset-password', 'change-email');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  CREATE TYPE "otp_change_type" AS ENUM('change-email');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ CREATE TYPE "user_gender" AS ENUM('male', 'female');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -36,6 +42,8 @@ CREATE TABLE IF NOT EXISTS "roles" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"email" varchar(256),
+	"emailVerified" timestamp with time zone,
 	"hashed_password" text NOT NULL,
 	"password_salt" text NOT NULL
 );
@@ -75,7 +83,91 @@ CREATE TABLE IF NOT EXISTS "drugs" (
 	"drug_substitutes" json,
 	"uses" json,
 	"habit_form" varchar(256),
-	"therapic_class" varchar(256)
+	"condition" varchar(256),
+	"medical_condition_url" varchar(256),
+	"description" text,
+	"side_effect" text,
+	"drug_url" varchar(256),
+	"related_drugs" json,
+	"therapeutic_class" varchar(256)
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "auth_tokens" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"user_id" uuid NOT NULL,
+	"token" varchar(24) NOT NULL,
+	"action" "auth_action" NOT NULL,
+	"expires_in" timestamp with time zone NOT NULL,
+	"user_ip" varchar(16),
+	"created_at" timestamp with time zone DEFAULT now(),
+	CONSTRAINT "single_user_auth" UNIQUE("user_id","action")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "user_profiles" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"user_id" uuid NOT NULL,
+	"full_name" varchar(256),
+	"profile_img_url" varchar(256),
+	"gender" "user_gender",
+	"date_of_birth" date
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "account" (
+	"userId" uuid NOT NULL,
+	"type" text NOT NULL,
+	"provider" text NOT NULL,
+	"providerAccountId" text NOT NULL,
+	"refresh_token" text,
+	"access_token" text,
+	"expires_at" integer,
+	"token_type" text,
+	"scope" text,
+	"id_token" text,
+	"session_state" text,
+	CONSTRAINT account_provider_providerAccountId PRIMARY KEY("provider","providerAccountId")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "session" (
+	"sessionToken" text PRIMARY KEY NOT NULL,
+	"userId" uuid NOT NULL,
+	"expires" timestamp with time zone NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "verificationToken" (
+	"identifier" text NOT NULL,
+	"token" text NOT NULL,
+	"expires" timestamp with time zone NOT NULL,
+	CONSTRAINT verificationToken_identifier_token PRIMARY KEY("identifier","token")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "conversations" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"user_id" uuid NOT NULL,
+	"pinned" timestamp,
+	"title" varchar,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now()
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "messages" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"title" varchar,
+	"server_content" json,
+	"user_content" varchar(256),
+	"conservation_id" uuid NOT NULL,
+	"sent_time" timestamp NOT NULL,
+	"user_id" uuid,
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now()
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "drug_2_conditions" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"drug_name" varchar(256) NOT NULL,
+	"condition" varchar(256) NOT NULL,
+	"effective" numeric(3, 2),
+	"side_effect" varchar(256),
+	"revies_length" numeric(3)
 );
 --> statement-breakpoint
 DO $$ BEGIN
@@ -128,6 +220,36 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "account_settings" ADD CONSTRAINT "account_settings_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "auth_tokens" ADD CONSTRAINT "auth_tokens_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "user_profiles" ADD CONSTRAINT "user_profiles_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "account" ADD CONSTRAINT "account_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "session" ADD CONSTRAINT "session_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "conversations" ADD CONSTRAINT "conversations_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

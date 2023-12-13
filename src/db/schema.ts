@@ -14,3 +14,4 @@ export * from './tables/sessions';
 export * from './tables/verification-tokens';
 export * from './tables/conversations';
 export * from './tables/message';
+export * from './tables/drug-to-condition';

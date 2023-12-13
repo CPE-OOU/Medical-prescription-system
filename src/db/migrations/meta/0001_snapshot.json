@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "01348142-00f3-466e-8b25-a7bf78281411",
-  "prevId": "3e7d8eb3-f5f3-4af4-a783-eba94409cd26",
+  "id": "5e8ebb07-1959-44a2-af93-59101c1578c7",
+  "prevId": "6ed83a11-11de-4ffb-b36c-865a0c7304d8",
   "tables": {
     "assigments": {
       "name": "assigments",
@@ -192,6 +192,18 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
         },
         "hashed_password": {
           "name": "hashed_password",
@@ -474,8 +486,50 @@
           "primaryKey": false,
           "notNull": false
         },
-        "therapic_class": {
-          "name": "therapic_class",
+        "condition": {
+          "name": "condition",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "medical_condition_url": {
+          "name": "medical_condition_url",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "effective": {
+          "name": "effective",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "side_effect": {
+          "name": "side_effect",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "drug_url": {
+          "name": "drug_url",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "related_drugs": {
+          "name": "related_drugs",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "therapeutic_class": {
+          "name": "therapeutic_class",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
@@ -562,6 +616,420 @@
           ]
         }
       }
+    },
+    "user_profiles": {
+      "name": "user_profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profile_img_url": {
+          "name": "profile_img_url",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "user_gender",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date_of_birth": {
+          "name": "date_of_birth",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_profiles_user_id_users_id_fk": {
+          "name": "user_profiles_user_id_users_id_fk",
+          "tableFrom": "user_profiles",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "account": {
+      "name": "account",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "providerAccountId": {
+          "name": "providerAccountId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token_type": {
+          "name": "token_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_state": {
+          "name": "session_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "account_userId_users_id_fk": {
+          "name": "account_userId_users_id_fk",
+          "tableFrom": "account",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "account_provider_providerAccountId": {
+          "name": "account_provider_providerAccountId",
+          "columns": [
+            "provider",
+            "providerAccountId"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "session": {
+      "name": "session",
+      "schema": "",
+      "columns": {
+        "sessionToken": {
+          "name": "sessionToken",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "session_userId_users_id_fk": {
+          "name": "session_userId_users_id_fk",
+          "tableFrom": "session",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "verificationToken": {
+      "name": "verificationToken",
+      "schema": "",
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "verificationToken_identifier_token": {
+          "name": "verificationToken_identifier_token",
+          "columns": [
+            "identifier",
+            "token"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "conversations": {
+      "name": "conversations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pinned": {
+          "name": "pinned",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "conversations_user_id_users_id_fk": {
+          "name": "conversations_user_id_users_id_fk",
+          "tableFrom": "conversations",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "messages": {
+      "name": "messages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "server_content": {
+          "name": "server_content",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_content": {
+          "name": "user_content",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "conservation_id": {
+          "name": "conservation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sent_time": {
+          "name": "sent_time",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "drug_2_conditions": {
+      "name": "drug_2_conditions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "drug_name": {
+          "name": "drug_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "condition": {
+          "name": "condition",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "effective": {
+          "name": "effective",
+          "type": "numeric(3, 2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "side_effect": {
+          "name": "side_effect",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "revies_length": {
+          "name": "revies_length",
+          "type": "numeric(3)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     }
   },
   "enums": {
@@ -577,6 +1045,13 @@
       "name": "otp_change_type",
       "values": {
         "change-email": "change-email"
+      }
+    },
+    "user_gender": {
+      "name": "user_gender",
+      "values": {
+        "male": "male",
+        "female": "female"
       }
     }
   },

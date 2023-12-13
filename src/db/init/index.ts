@@ -8,6 +8,6 @@ declare global {
 }
 
 const client = postgres(parsedEnv.DATABASE_URL, { max: 1 });
-const db = globalThis.db ?? (globalThis.db = drizzle(client, { schema }));
+const db = drizzle(client, { schema });
 
 export { db };

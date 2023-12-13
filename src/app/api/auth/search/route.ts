@@ -28,9 +28,11 @@ export const POST = async (req: Request) => {
       .from(drug2Conditions)
       .where(ilike(drug2Conditions.condition, condition));
 
-    const formattedDrugs = drugsToCondition.map(({ drugName }) =>
-      webScrapeDrugContent(drugName)
+    const formattedDrugs = await Promise.allSettled(
+      drugsToCondition.map(({ drugName }) => webScrapeDrugContent(drugName))
     );
+
+    console.log({ drugsToCondition });
 
     return createSuccessResponse(
       {

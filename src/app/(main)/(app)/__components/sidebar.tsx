@@ -4,11 +4,16 @@ import { Button } from '@/components/ui/button';
 import { Plus, Settings } from 'lucide-react';
 import Image from 'next/image';
 import { useLayoutStore } from '../__state/layout';
-import { ConversationItme } from './conversation-item';
+import { ConversationItem } from './conversation-item';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Conversation } from '@/db/schema';
 
-export const LayoutSideBar = () => {
+export const LayoutSideBar = ({
+  conversations,
+}: {
+  conversations?: Array<Conversation>;
+}) => {
   const sidebarCollapse = useLayoutStore(
     ({ sidebarCollapse }) => sidebarCollapse
   );
@@ -49,7 +54,12 @@ export const LayoutSideBar = () => {
         <div>
           <p className="body-7 mb-3">Recents</p>
           <div className="space-y-3">
-            <ConversationItme />
+            {conversations?.map((conversation) => (
+              <ConversationItem
+                key={conversation.id}
+                conversation={conversation}
+              />
+            ))}
           </div>
         </div>
       </div>

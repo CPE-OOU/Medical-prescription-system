@@ -12,14 +12,18 @@ import { Conversation } from '@/db/schema';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 interface ConversationItem {
-  conversation?: Conversation;
+  conversation: Conversation;
 }
 
-export const ConversationItme = ({ conversation }: ConversationItem) => {
+export const ConversationItem = ({
+  conversation: { title, id },
+}: ConversationItem) => {
   const [hovered, setHovered] = useState(false);
   const [optionOpened, setOptionOpened] = useState(false);
+  const router = useRouter();
   return (
     <div
       className={cn(
@@ -32,6 +36,7 @@ export const ConversationItme = ({ conversation }: ConversationItem) => {
       onMouseLeave={() => {
         setHovered(false);
       }}
+      onClick={() => router.push(`/chat/${id}`)}
     >
       <div className="h-full flex items-center gap-x-2">
         <span className="inline-block p-[6px] rounded-full bg-[#F2F2F2]">
@@ -43,7 +48,7 @@ export const ConversationItme = ({ conversation }: ConversationItem) => {
             (hovered || optionOpened) && 'w-[112px]'
           )}
         >
-          Severe headache with dizzness
+          {title}
         </p>
       </div>
       <div className={cn('hidden', (hovered || optionOpened) && 'block')}>

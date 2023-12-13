@@ -51,7 +51,12 @@ export const SearchCard = ({
           <form
             className="w-full flex items-center gap-x-5"
             onSubmit={form.handleSubmit(({ search }) => {
-              execute({ message: search, userId: user.id, conversationId });
+              execute({
+                message: search,
+                userId: user.id,
+                conversationId,
+                sentTime: new Date(),
+              });
             })}
           >
             <FormField

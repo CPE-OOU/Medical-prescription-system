@@ -1,8 +1,6 @@
 'use client';
-import { QueryProvider } from './query';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-import { ModalProvider } from './modal-provider';
 import { NotificationToaster } from './toast';
 
 interface ProviderProps {

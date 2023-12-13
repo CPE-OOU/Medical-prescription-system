@@ -6,7 +6,7 @@ import { action } from '@/lib/safe-action';
 import { eq, ilike } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { object, string } from 'zod';
+import { object, string, date } from 'zod';
 
 export const updateConversationTitle = action(
   object({
@@ -53,6 +53,7 @@ export const createMessage = action(
     conversationId: string().uuid().optional(),
     message: string().max(256),
     userId: string().uuid(),
+    sentTime: date(),
   }),
   async ({ conversationId, userId, message: data }) => {
     if (conversationId) {

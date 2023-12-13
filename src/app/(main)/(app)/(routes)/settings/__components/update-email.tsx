@@ -76,11 +76,7 @@ export const UpdateEmail: React.FC<UpdateEmalProps> = ({
                     </FormItem>
                   )}
                 />
-                <Button
-                  variant="primary"
-                  className="self-start  px-6 py-3"
-                  type="submit"
-                >
+                <Button className="self-start  px-6 py-3" type="submit">
                   Update Email
                 </Button>
               </form>

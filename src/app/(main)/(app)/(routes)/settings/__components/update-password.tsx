@@ -155,7 +155,6 @@ export const UpdatePasword: React.FC<ChangePasswordProps> = () => {
                 )}
               />
               <Button
-                variant="primary"
                 className="self-start  px-6 py-3"
                 type="submit"
                 disabled={serverUpdatingPassword}
